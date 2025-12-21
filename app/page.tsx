@@ -18,10 +18,8 @@ const cardsSeed: RaffleCard[] = [
     id: "fin-de-ano",
     title: "🎆 FIN DE AÑO 🎇",
     imageUrl: "01KCXYKPM2W7M6GV15JR50JM7D.webp", // pon tu ruta real
-    buyUrl:
-      "https://www.juanreinosomorles.com/comprar/2119c812-dd45-11f0-9843-405b7f92a4a4",
-    verifyUrl:
-      "https://www.juanreinosomorles.com/verificador/2119c812-dd45-11f0-9843-405b7f92a4a4",
+    buyUrl: "boletos",
+    verifyUrl: "verificador",
     dayLabel: "29",
     monthLabel: "Diciembre",
     availablePercent: 90.72,
