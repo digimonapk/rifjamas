@@ -22,7 +22,7 @@ const cardsSeed: RaffleCard[] = [
     verifyUrl: "verificador",
     dayLabel: "29",
     monthLabel: "Diciembre",
-    availablePercent: 90.72,
+    availablePercent: 79.67,
   },
 ];
 
