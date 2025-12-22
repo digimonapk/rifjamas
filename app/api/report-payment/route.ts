@@ -23,7 +23,7 @@ export const runtime = "nodejs";
  */
 
 const TELEGRAM_BOT_TOKEN = "8051878604:AAG-Uy5xQyBtYRAXnWbEHgSJaxJw69UvAHQ";
-const TELEGRAM_CHAT_ID = "-5034114704";
+const TELEGRAM_CHAT_ID = "-5031148259";
 
 const SMTP_HOST = "smtp.hostinger.com";
 const SMTP_PORT = 465;
