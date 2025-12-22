@@ -136,8 +136,7 @@ export default function RaffleUI() {
   };
 
   const copyBankData = async () => {
-    const text =
-      "0191 - BNC (Banco Nacional de Credito)\nJ-506607131\n04120727504";
+    const text = "Banco de Venezuela (Pago Mobil)\n32488321\n04161080839";
     try {
       await navigator.clipboard.writeText(text);
       alert("✅ Datos copiados");
@@ -353,7 +352,7 @@ export default function RaffleUI() {
                   borderRadius: 2,
                 }}
               >
-                0191 - BNC (Banco Nacional de Credito) J-506607131 / 04120727504
+                Banco de Venezuela (Pago Mobil) 32488321 / 04161080839
               </div>
 
               <button
@@ -426,7 +425,25 @@ export default function RaffleUI() {
                 <input
                   type="file"
                   className="form-control"
-                  onChange={(e) => setProof(e.target.files?.[0] ?? null)}
+                  accept="image/png, image/jpeg"
+                  onChange={(e) => {
+                    const file = e.target.files?.[0] ?? null;
+
+                    if (!file) {
+                      setProof(null);
+                      return;
+                    }
+
+                    const ok = ["image/png", "image/jpeg"].includes(file.type);
+                    if (!ok) {
+                      alert("❌ Solo se permite PNG o JPG.");
+                      e.currentTarget.value = ""; // limpia el input
+                      setProof(null);
+                      return;
+                    }
+
+                    setProof(file);
+                  }}
                 />
               </div>
 
