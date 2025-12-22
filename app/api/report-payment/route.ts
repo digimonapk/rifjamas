@@ -126,6 +126,15 @@ function buildTicketsEmailHTML(params: {
         </div>
       </div>
 
+      <!-- ✅ IMAGEN EN LA PARTE SUPERIOR -->
+      <div style="text-align:center;padding:32px 20px 24px;">
+        <img 
+          src="https://www.rifasjamass.com/assets/images/logos/logo_jamas.png" 
+          alt="Logo" 
+          style="max-width:100px;height:auto;display:block;margin:0 auto;"
+        />
+      </div>
+
       <div style="padding:20px;color:#e5e7eb;">
         <p style="margin:0 0 12px 0;">Hola <b>${escapeHtml(fullName)}</b>,</p>
         <p style="margin:0 0 18px 0;color:#cbd5e1;">
@@ -183,7 +192,7 @@ function buildTicketsEmailHTML(params: {
       </div>
     </div>
   </div>
-  `;
+`;
 }
 
 function buildTicketsEmailText(params: {
