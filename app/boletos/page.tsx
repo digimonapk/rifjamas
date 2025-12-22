@@ -485,6 +485,22 @@ export default function RaffleUI() {
           >
             {isSubmitting ? "Procesando..." : "Comprar ✅"}
           </button>
+          <div className="d-flex justify-content-center mt-3">
+            <a
+              href="verificador"
+              className="fw-bold text-decoration-none d-flex align-items-center justify-content-center w-100"
+              style={{
+                background: "#FFD600", // amarillo
+                color: "#000000", // letras negras
+                height: 44,
+                borderRadius: 4,
+                opacity: isSubmitting ? 0.7 : 1,
+                cursor: isSubmitting ? "not-allowed" : "pointer",
+              }}
+            >
+              Verificar
+            </a>
+          </div>
         </div>
 
         {/* bottom image */}

@@ -179,9 +179,7 @@ function buildTicketsEmailHTML(params: {
         <div style="margin-bottom:18px;">${ticketsHtml}</div>
 
         <div style="text-align:center;margin:24px 0;">
-          <a href="${BASE_URL}/${escapeHtml(
-    transactionId
-  )}" style="display:inline-block;padding:14px 32px;background:#22c55e;color:#ffffff;text-decoration:none;border-radius:10px;font-weight:700;font-size:16px;box-shadow:0 4px 6px rgba(34,197,94,0.3);">
+          <a href="${BASE_URL}/verificador" style="display:inline-block;padding:14px 32px;background:#22c55e;color:#ffffff;text-decoration:none;border-radius:10px;font-weight:700;font-size:16px;box-shadow:0 4px 6px rgba(34,197,94,0.3);">
             🎟️ Ver mis boletos
           </a>
         </div>

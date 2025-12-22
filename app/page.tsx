@@ -108,7 +108,7 @@ export default function RifasJamasLanding() {
                     <div className="flex flex-col items-center gap-3">
                       <a
                         href={active.buyUrl}
-                        className="w-full rounded-full bg-yellow-400 px-4 py-4 text-center font-extrabold text-black transition hover:scale-[1.02] active:scale-[0.99]"
+                        className="no-underline w-full rounded-full bg-[#efb810] px-4 py-4 text-center font-extrabold text-black transition hover:scale-[1.02] active:scale-[0.99] "
                         rel="noopener"
                       >
                         COMPRAR TICKETS
@@ -116,7 +116,7 @@ export default function RifasJamasLanding() {
 
                       <a
                         href={active.verifyUrl}
-                        className="w-full rounded-full bg-[#efb810] px-5 py-4 text-center font-extrabold text-white transition hover:scale-[1.02] active:scale-[0.99]"
+                        className="no-underline w-60 rounded-full bg-[#efb810] px-4 py-4 text-center font-extrabold text-black transition hover:scale-[1.02] active:scale-[0.99]"
                         rel="noopener"
                       >
                         Verificar Ticket
