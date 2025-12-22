@@ -91,7 +91,7 @@ export default function RifasJamasLanding() {
                     <img
                       src={active.imageUrl}
                       alt={active.title}
-                      className="h-full w-full object-cover"
+                      className="h-full w-full "
                       loading="eager"
                     />
                   </div>
@@ -108,7 +108,7 @@ export default function RifasJamasLanding() {
                     <div className="flex flex-col items-center gap-3">
                       <a
                         href={active.buyUrl}
-                        className="w-full rounded-full bg-yellow-400 px-5 py-4 text-center font-extrabold text-black transition hover:scale-[1.02] active:scale-[0.99]"
+                        className="w-full rounded-full bg-yellow-400 px-4 py-4 text-center font-extrabold text-black transition hover:scale-[1.02] active:scale-[0.99]"
                         rel="noopener"
                       >
                         COMPRAR TICKETS

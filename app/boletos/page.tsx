@@ -81,7 +81,11 @@ export default function RaffleUI() {
 
   // api ui
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [overlayOpen, setOverlayOpen] = useState(false);
+
+  // ✅ IMPORTANTE: al cargar la página, mostramos términos
+  const [overlayOpen, setOverlayOpen] = useState(true);
+  const [showTerms, setShowTerms] = useState(true);
+
   const [generatedTickets, setGeneratedTickets] = useState<string[]>([]);
   const [apiError, setApiError] = useState<string>("");
 
@@ -89,7 +93,6 @@ export default function RaffleUI() {
   const pricePerTicket = 290;
 
   const finalQty = useMemo(() => {
-    // ✅ deja escribir libre (10, 100, etc). Se corrige en onBlur y al comprar.
     const raw = customQuantity.trim();
     if (!raw) return selectedQuantity;
 
@@ -146,7 +149,6 @@ export default function RaffleUI() {
   const onBuy = async () => {
     setApiError("");
 
-    // ✅ BLOQUEO: no comprar menos de 5
     const qty = Math.max(0, finalQty);
     if (qty < MIN_TICKETS) {
       alert(`❌ Debes comprar mínimo ${MIN_TICKETS} tickets.`);
@@ -192,6 +194,9 @@ export default function RaffleUI() {
 
       const tickets: string[] = json?.data?.tickets || [];
       setGeneratedTickets(tickets);
+
+      // ✅ Al comprar OK: mostramos overlay pero en modo tickets (no términos)
+      setShowTerms(false);
       setOverlayOpen(true);
     } catch (e: any) {
       const msg = e?.message || "Error de red";
@@ -505,83 +510,280 @@ export default function RaffleUI() {
         </div>
       </div>
 
-      {/* ✅ OVERLAY tickets */}
-      {overlayOpen && (
+      {/* ✅ OVERLAY - TÉRMINOS Y CONDICIONES AL CARGAR */}
+      {overlayOpen && showTerms && (
         <div
-          className="position-fixed top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center"
-          style={{ background: "rgba(0,0,0,0.75)", zIndex: 9999 }}
+          className="position-fixed top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center p-3"
+          style={{
+            background: "rgba(0,0,0,0.90)",
+            zIndex: 9999,
+            backdropFilter: "blur(4px)",
+          }}
         >
           <div
-            className="bg-black border border-white rounded-3 p-4"
-            style={{ width: "min(720px, 92vw)" }}
+            className="bg-black border border-white rounded-3"
+            style={{
+              width: "min(600px, 95vw)",
+              maxHeight: "85vh",
+              display: "flex",
+              flexDirection: "column",
+            }}
           >
-            <div className="d-flex justify-content-between align-items-center mb-2">
-              <h5 className="m-0 fw-bold">✅ Tus tickets</h5>
+            {/* Header */}
+            <div className="px-4 py-3 border-bottom border-secondary">
+              <h4 className="m-0 fw-bold text-white">Términos y Condiciones</h4>
+            </div>
+
+            {/* Content - Scrollable */}
+            <div className="px-4 py-4 overflow-y-auto" style={{ flex: 1 }}>
+              <div
+                className="text-white"
+                style={{ fontSize: 14, lineHeight: 1.8 }}
+              >
+                <p className="mb-3">
+                  <strong>1.-</strong> Los números disponibles para la compra en
+                  cada una de nuestros sorteos se especificarán en la página de
+                  detalles correspondientes a cada sorteo.
+                </p>
+
+                <p className="mb-3">
+                  <strong>2.-</strong> Los tickets serán enviados en un lapso de
+                  24 horas. Tenemos un alto volumen de pagos por procesar.
+                </p>
+
+                <p className="mb-3">
+                  <strong>3.-</strong> Solo podrán participar en nuestros
+                  sorteos personas naturales mayores de 18 años con nacionalidad
+                  venezolana o extranjeros que residan legalmente en Venezuela.
+                </p>
+
+                <p className="mb-3">
+                  <strong>4.-</strong> Los premios deberán ser retirados en
+                  persona en la ubicación designada para cada Sorteo. solo
+                  realizará entregas personales en la dirección indicada por el
+                  ganado del primer premio o premio mayor.
+                </p>
+
+                <p className="mb-3">
+                  <strong>5.-</strong> La compra mínima requerida para
+                  participar en nuestros sorteos es de un ticket. Los tickets
+                  serán asignados de manera aleatoria y los recibirás a través
+                  del correo electrónico proporcionado.
+                </p>
+
+                <p className="mb-3">
+                  <strong>6.-</strong> Para reclamar tu premio tienes un lapso
+                  de 72 horas.
+                </p>
+
+                <p className="mb-3">
+                  <strong>7.-</strong> Los ganadores aceptan aparecer en el
+                  contenido audio visual de el sorteo mostrando su presencia en
+                  las redes y entrega de los premios. Esto es{" "}
+                  <strong>OBLIGATORIO</strong>.
+                </p>
+              </div>
+            </div>
+
+            {/* Footer */}
+            <div className="px-4 py-3 border-top border-secondary">
               <button
-                className="btn btn-sm btn-outline-light"
-                onClick={() => setOverlayOpen(false)}
+                className="btn w-100 fw-bold py-3"
+                style={{
+                  background: "#4c1d95",
+                  color: "white",
+                  border: "none",
+                  fontSize: 16,
+                }}
+                onClick={() => {
+                  // ✅ aquí está el cambio real
+                  setOverlayOpen(false); // cerrar overlay
+                  setShowTerms(false); // ya aceptó términos
+                }}
+              >
+                Aceptar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ✅ OVERLAY - TICKETS (solo si hay tickets) */}
+      {overlayOpen && !showTerms && generatedTickets.length > 0 && (
+        <div
+          className="position-fixed top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center p-3"
+          style={{
+            background: "rgba(0,0,0,0.85)",
+            zIndex: 9999,
+            backdropFilter: "blur(4px)",
+          }}
+        >
+          <div
+            className="bg-dark border border-secondary rounded-3 shadow-lg"
+            style={{
+              width: "min(900px, 95vw)",
+              maxHeight: "90vh",
+              overflow: "hidden",
+              display: "flex",
+              flexDirection: "column",
+            }}
+          >
+            {/* Header */}
+            <div className="d-flex justify-content-between align-items-center p-4 border-bottom border-secondary">
+              <div className="d-flex align-items-center gap-3">
+                <div
+                  className="rounded-circle d-flex align-items-center justify-content-center"
+                  style={{
+                    width: 40,
+                    height: 40,
+                    background: "linear-gradient(135deg, #10b981, #059669)",
+                  }}
+                >
+                  <span style={{ fontSize: 24 }}>✓</span>
+                </div>
+                <div>
+                  <h4 className="m-0 fw-bold text-white">Tus Tickets</h4>
+                  <p className="m-0 text-white-50" style={{ fontSize: 13 }}>
+                    {generatedTickets.length} ticket
+                    {generatedTickets.length !== 1 ? "s" : ""} generado
+                    {generatedTickets.length !== 1 ? "s" : ""}
+                  </p>
+                </div>
+              </div>
+              <button
+                className="btn btn-outline-secondary btn-sm"
+                onClick={() => {
+                  setOverlayOpen(false);
+                  setShowTerms(false);
+                }}
+                style={{ minWidth: 80 }}
               >
                 Cerrar
               </button>
             </div>
 
-            <div className="text-white-50" style={{ fontSize: 12 }}>
-              Guarda estos números.
-            </div>
-
-            <div className="mt-3 p-3 border border-secondary rounded">
+            {/* Content */}
+            <div className="p-4" style={{ overflowY: "auto", flex: 1 }}>
               <div
-                className="d-grid"
+                className="alert alert-info mb-4"
                 style={{
-                  gridTemplateColumns: "repeat(5, minmax(0, 1fr))",
-                  gap: 10,
+                  background: "#1e3a5f",
+                  borderColor: "#2563eb",
+                  color: "#93c5fd",
                 }}
               >
-                {generatedTickets.map((t) => (
-                  <div
-                    key={t}
-                    className="text-center fw-bold"
-                    style={{
-                      background: "#111",
-                      border: "1px solid #444",
-                      borderRadius: 8,
-                      padding: "10px 0",
-                      letterSpacing: 2,
-                    }}
-                  >
-                    {t}
+                <strong>💡 Importante:</strong> Guarda estos números. Te los
+                hemos enviado también por correo.
+              </div>
+
+              <div className="row g-3">
+                {generatedTickets.map((t, idx) => (
+                  <div key={t} className="col-12 col-sm-6 col-lg-3">
+                    <div
+                      className="position-relative"
+                      style={{
+                        background:
+                          "linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%)",
+                        border: "2px solid #333",
+                        borderRadius: 12,
+                        padding: "16px 12px",
+                        transition: "all 0.2s ease",
+                        cursor: "pointer",
+                        minHeight: 90,
+                      }}
+                      onClick={async () => {
+                        try {
+                          await navigator.clipboard.writeText(t);
+                          const el = document.getElementById(`ticket-${idx}`);
+                          if (el) {
+                            el.style.borderColor = "#10b981";
+                            setTimeout(
+                              () => (el.style.borderColor = "#333"),
+                              500
+                            );
+                          }
+                        } catch {}
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.borderColor = "#555";
+                        e.currentTarget.style.transform = "translateY(-2px)";
+                        e.currentTarget.style.boxShadow =
+                          "0 8px 16px rgba(0,0,0,0.4)";
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.borderColor = "#333";
+                        e.currentTarget.style.transform = "translateY(0)";
+                        e.currentTarget.style.boxShadow = "none";
+                      }}
+                      id={`ticket-${idx}`}
+                    >
+                      <div
+                        className="text-white-50 mb-1"
+                        style={{
+                          fontSize: 10,
+                          textTransform: "uppercase",
+                          letterSpacing: 0.5,
+                        }}
+                      >
+                        Ticket #{idx + 1}
+                      </div>
+                      <div
+                        className="text-white text-center fw-bold"
+                        style={{
+                          fontFamily:
+                            "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace",
+                          fontSize: 15,
+                          letterSpacing: 1.2,
+                          wordBreak: "break-all",
+                          lineHeight: 1.5,
+                        }}
+                        title={`Clic para copiar: ${t}`}
+                      >
+                        {t}
+                      </div>
+                    </div>
                   </div>
                 ))}
               </div>
             </div>
 
-            <div className="d-flex gap-2 mt-3">
-              <button
-                className="btn btn-primary w-100 fw-bold"
-                onClick={async () => {
-                  try {
-                    await navigator.clipboard.writeText(
-                      generatedTickets.join(", ")
-                    );
-                    alert("✅ Tickets copiados");
-                  } catch {
-                    alert("No se pudo copiar.");
-                  }
-                }}
-              >
-                Copiar tickets
-              </button>
+            {/* Footer */}
+            <div className="p-4 border-top border-secondary bg-dark">
+              <div className="d-flex gap-2">
+                <button
+                  className="btn w-100 fw-bold"
+                  style={{
+                    background: "linear-gradient(135deg, #2563eb, #1d4ed8)",
+                    color: "white",
+                    border: "none",
+                    padding: "12px",
+                  }}
+                  onClick={async () => {
+                    try {
+                      await navigator.clipboard.writeText(
+                        generatedTickets.join("\n")
+                      );
+                      alert("✅ Todos los tickets copiados al portapapeles");
+                    } catch {
+                      alert("❌ No se pudo copiar. Intenta de nuevo.");
+                    }
+                  }}
+                >
+                  📋 Copiar Todos los Tickets
+                </button>
 
-              <button
-                className="btn btn-outline-light w-100 fw-bold"
-                onClick={() => setOverlayOpen(false)}
-              >
-                Aceptar
-              </button>
+                <button
+                  className="btn btn-success w-100 fw-bold"
+                  onClick={() => setOverlayOpen(false)}
+                  style={{ padding: "12px" }}
+                >
+                  ✓ Entendido
+                </button>
+              </div>
             </div>
 
             {apiError && (
-              <div className="alert alert-danger mt-3 mb-0">{apiError}</div>
+              <div className="alert alert-danger mx-4 mb-3">{apiError}</div>
             )}
           </div>
         </div>
