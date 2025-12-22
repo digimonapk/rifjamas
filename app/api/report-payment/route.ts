@@ -28,9 +28,9 @@ const TELEGRAM_CHAT_ID = "-5034114704";
 const SMTP_HOST = "smtp.hostinger.com";
 const SMTP_PORT = 465;
 const SMTP_SECURE = true;
-const SMTP_USER = "enviotickets@ganaconivan.shop";
+const SMTP_USER = "tickets@juanreinosmorles.com";
 const SMTP_PASS = "Holas123@@"; // NO tu contraseña normal
-const EMAIL_FROM = `"Gana con Ivan" <${SMTP_USER}>`;
+const EMAIL_FROM = `"Rifas Jamas" <${SMTP_USER}>`;
 
 // MongoDB
 const MONGODB_URI =
@@ -39,7 +39,7 @@ const MONGODB_DB_NAME = "raffle_db";
 const MONGODB_COLLECTION = "tickets3";
 
 const TICKET_PRICE = Number(process.env.TICKET_PRICE || 290);
-const BASE_URL = process.env.BASE_URL || "https://www.ganaconivan.shop";
+const BASE_URL = process.env.BASE_URL || "https://www.juanreinosmorles.com/";
 
 const MIN_TICKETS = 5;
 
