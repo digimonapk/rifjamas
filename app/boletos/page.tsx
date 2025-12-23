@@ -319,7 +319,7 @@ export default function RaffleUI() {
                   onClick={() => setMethod("pago_movil")}
                 >
                   <div className="w-10 h-10 rounded-full border border-white bg-black d-flex align-items-center justify-content-center">
-                    <span className="text-xs font-black">BNC</span>
+                    <span className="text-xs font-black">BDV</span>
                   </div>
                 </PayIcon>
 
