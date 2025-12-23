@@ -136,7 +136,7 @@ export default function RaffleUI() {
   };
 
   const copyBankData = async () => {
-    const text = "Banco de Venezuela (Pago Movil)\n32488321\n04161080839";
+    const text = "0102 - BDV (Banco de Venezuela) V-32488321 / 04161080839";
     try {
       await navigator.clipboard.writeText(text);
       alert("✅ Datos copiados");
@@ -352,7 +352,7 @@ export default function RaffleUI() {
                   borderRadius: 2,
                 }}
               >
-                Banco de Venezuela (Pago Movil) 32488321 / 04161080839
+                0102 - BDV (Banco de Venezuela) V-32488321 / 04161080839
               </div>
 
               <button
